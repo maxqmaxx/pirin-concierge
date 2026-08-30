@@ -5,8 +5,10 @@
 This document is the auditable record for an **application-stage TRL 4 laboratory demonstrator**. It starts as a template. A design, source file, planned test, screenshot, or `TODO` is not by itself evidence that the integrated technology has been validated in a laboratory setting.
 
 A [local pre-publication verification](evidence/local-verification-2026-08-30.md) records passing
-installation, contract, MCP, API, coverage, build, dependency and secret checks. CI, release, public
-deployment and independent reproduction remain pending until they can be tied to a published commit.
+installation, contract, MCP, API, coverage, build, dependency and secret checks. A subsequent
+[GitHub Actions run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928) passed the
+automated gates on the published implementation commit. Release, public deployment, recording and
+independent reproduction remain pending.
 
 Do not mark the record “verified”, create a `v0.1.0-trl4` release, or cite the repository as completed TRL 4 evidence until all mandatory gates have an observed result tied to the same immutable commit.
 
@@ -16,20 +18,20 @@ Publication of this repository does not establish TRL 5, TRL 6, production readi
 
 | Field | Evidence value |
 |---|---|
-| Repository | `https://github.com/maxqmaxx/pirin-concierge` (verify after creation) |
-| Commit SHA | `TODO` |
+| Repository | `https://github.com/maxqmaxx/pirin-concierge` (public) |
+| Commit SHA | `9e40d04302043ba916c13918783af1bcb3dffbed` |
 | Tag/release | `TODO: RELEASE_URL` |
-| Verification date/time (UTC) | `TODO` |
-| Verifier(s) | `TODO` |
-| Laboratory environment | `TODO: OS, architecture, Node/npm, container/runtime` |
-| MCP server SDK/version | `TODO` |
-| MCP client/version/transport | `TODO` |
-| Demo-data version/checksum | `TODO` |
-| CI run | `TODO: CI_RUN_URL` |
-| Deployment | `TODO: DEMO_URL` or `not used; local laboratory evidence only` |
+| Verification date/time (UTC) | `2026-08-30T14:20:01Z` (CI completion) |
+| Verifier(s) | Automated GitHub Actions workflow plus local maintainer verification |
+| Laboratory environment | GitHub-hosted `ubuntu-latest`, Node.js 20; local macOS verification documented separately |
+| MCP server SDK/version | `@modelcontextprotocol/server` 2.0.0 |
+| MCP client/version/transport | `@modelcontextprotocol/client` 2.0.0; in-memory and Streamable HTTP contract tests |
+| Demo-data version/checksum | `ecc119c2197998e1fc9968f0b41b1692ec23dbb94c6a786fd9421cc9462a78c2` |
+| CI run | [Successful run 33316553928](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928) |
+| Deployment | `TODO: DEMO_URL` — no public deployment claimed yet |
 | Video/transcript | `TODO: VIDEO_URL / TRANSCRIPT_URL` |
 
-Current status: **NOT YET VERIFIED — evidence placeholders remain.**
+Current status: **CODE AND CONTRACT GATES VERIFIED — release, deployment, recording and independent reproduction remain pending.**
 
 ## Claim under evaluation
 

@@ -1,8 +1,11 @@
 # Local pre-publication verification — 2026-08-30
 
-This record captures a local verification of the uncommitted initial repository worktree. It is useful
-pre-publication evidence, but it is not a substitute for a green CI run tied to the published commit,
-an independent reproduction, a public deployment, or a TRL assessment.
+This record captures a local verification of the uncommitted initial repository worktree. The same
+implementation was subsequently published as commit
+[`9e40d04302043ba916c13918783af1bcb3dffbed`](https://github.com/maxqmaxx/pirin-concierge/commit/9e40d04302043ba916c13918783af1bcb3dffbed)
+and passed the repository's Node.js 20 [CI run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928).
+It is not a substitute for an independent reproduction, public deployment, recording, release, or TRL
+assessment.
 
 ## Environment
 
@@ -33,7 +36,8 @@ The CI workflow separately targets Node.js 20, which is the minimum supported ma
 | HTTP smoke test | PASS | `/health`, catalogue search, and an experience page with JSON-LD responded locally |
 | MCP contract | PASS | Official MCP client tests covered all four tools and modern Streamable HTTP negotiation |
 | Container build | NOT RUN | Docker was not installed in the verification environment |
-| CI/public deployment/video | PENDING | These require the published repository and release commit |
+| Public CI | PASS | GitHub Actions completed successfully on the published implementation commit |
+| Public deployment/video/release | PENDING | These require separate release artefacts and URLs |
 
 ## Request-only invariants covered by tests
 
@@ -53,6 +57,6 @@ ecc119c2197998e1fc9968f0b41b1692ec23dbb94c6a786fd9421cc9462a78c2  data/demo/expe
 ab7db8b57f8cf62fcb8ff39424bda3e31b78e1c35a65b3b26300596f32b39cd9  package-lock.json
 ```
 
-Re-run `npm ci && npm run verify && npm audit --audit-level=high` on the published commit and replace
-the pending CI/release fields in the main evidence record before citing the repository as final TRL 4
-evidence.
+The published implementation commit passed `npm ci`, the complete `npm run verify` gate, and dependency
+audit in CI. Complete the pending release, deployment and recording fields before citing the repository
+as the final TRL 4 evidence package.

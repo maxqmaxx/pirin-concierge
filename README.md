@@ -1,8 +1,10 @@
 # Pirin Concierge
 
+[![CI](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml)
+
 Pirin Concierge is an **application-stage TRL 4 laboratory demonstrator** for discovering rural experiences in Bulgaria's Pirin area through a small web/API catalogue, machine-readable metadata, and Model Context Protocol (MCP) tools.
 
-> **Status:** This repository is being prepared as technical evidence for an application. It uses synthetic demonstration data only. A public deployment, CI run, and TRL 4 verification must not be assumed until the evidence table below contains dated links and commit identifiers.
+> **Status:** The public source and automated laboratory checks are available as technical evidence for an application. The repository uses synthetic demonstration data only. A public deployment, release, recording, and completed TRL 4 evidence package must not be assumed until the remaining gates below contain dated links.
 
 ## Evaluator overview
 
@@ -21,12 +23,12 @@ The following table is intentionally conservative. Replace every `TODO` only aft
 
 | Evidence | Status | Verifiable reference |
 |---|---|---|
-| Source and synthetic catalogue | Locally verified; CI pending | [`data/demo/`](data/demo/), [local verification](docs/evidence/local-verification-2026-08-30.md) |
-| Automated test result | **Local PASS — CI pending** | [28/28 tests and coverage](docs/evidence/local-verification-2026-08-30.md), `TODO: CI_RUN_URL` |
+| Source and synthetic catalogue | **PASS — public and CI verified** | [`data/demo/`](data/demo/), [initial implementation commit](https://github.com/maxqmaxx/pirin-concierge/commit/9e40d04302043ba916c13918783af1bcb3dffbed) |
+| Automated test result | **PASS — 28/28 tests on Node 20** | [GitHub Actions run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928), [coverage record](docs/evidence/local-verification-2026-08-30.md) |
 | Reproducible release | **TODO — not yet published** | `TODO: RELEASE_URL` |
 | Public laboratory deployment | **TODO — not yet verified** | `TODO: DEMO_URL` |
-| MCP client demonstration | Official client contract tests pass locally; recording pending | [local verification](docs/evidence/local-verification-2026-08-30.md), `TODO: VIDEO_URL` |
-| Dated TRL 4 evidence record | Template; observations pending | [`docs/trl4-evidence.md`](docs/trl4-evidence.md) |
+| MCP client demonstration | Official client contract tests pass in CI; recording pending | [MCP contract tests](tests/mcp.test.ts), [CI run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928), `TODO: VIDEO_URL` |
+| Dated TRL 4 evidence record | Code/contract observations recorded; release gates pending | [`docs/trl4-evidence.md`](docs/trl4-evidence.md) |
 
 ## Safety and commercial boundary
 

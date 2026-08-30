@@ -9,12 +9,11 @@ All notable changes to the public reference demonstrator will be documented here
 - Added evaluator-oriented documentation and explicit open-source boundaries.
 - Added templates for architecture, data model, threat model, demonstration, and TRL evidence.
 - Defined the intended request-only booking invariant: host confirmation required and no payment collected.
-- Marked CI, deployment, video, release, and observed TRL evidence as pending verification.
+- Verified the implementation, contracts and synthetic dataset locally and in public Node.js 20 CI.
+- Recorded the successful initial implementation run and immutable commit SHA.
 
 ### Pending before `v0.1.0-trl4`
 
-- `TODO`: verify the implementation, contracts, and synthetic dataset from a clean clone.
-- `TODO`: obtain a green CI result and complete security checks.
 - `TODO`: publish a reproducible prerelease tied to an exact commit SHA.
 - `TODO`: capture the laboratory demonstration and populate the evidence record.
 

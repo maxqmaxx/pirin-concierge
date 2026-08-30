@@ -13,7 +13,7 @@ Complete this before recording:
 | Field | Value |
 |---|---|
 | UTC date/time | `TODO` |
-| Repository | `https://github.com/maxqmaxx/pirin-concierge` (verify after creation) |
+| Repository | `https://github.com/maxqmaxx/pirin-concierge` (public) |
 | Commit SHA | `TODO` |
 | Release | `TODO: RELEASE_URL` |
 | Public demo | `TODO: DEMO_URL` or `local laboratory run` |
