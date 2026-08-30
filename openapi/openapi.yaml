@@ -1,0 +1,548 @@
+openapi: 3.1.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+info:
+  title: Pirin Concierge TRL 4 Demonstrator API
+  version: 0.1.0-trl4
+  summary: Synthetic, request-only rural experience discovery demonstrator
+  description: |
+    A laboratory API over 12 fully synthetic experience records. The booking endpoint only creates a
+    request for a synthetic host to review. It cannot confirm an experience, charge a visitor, collect a
+    payment, create a package or act as the seller. A host remains the seller and would confirm terms and
+    receive payment directly outside this demonstrator.
+  contact:
+    name: Galactiv EOOD
+    url: https://galactiv.eu
+  license:
+    name: Apache-2.0
+    identifier: Apache-2.0
+servers:
+  - url: http://localhost:3000
+    description: Local laboratory demonstrator
+security: []
+tags:
+  - name: System
+    description: Process readiness and release identity.
+  - name: Experiences
+    description: Read-only discovery over the synthetic catalogue.
+  - name: Concierge
+    description: Catalogue-grounded retrieval with explicit demo disclosure.
+  - name: Booking requests
+    description: Synthetic expressions of interest that require separate host confirmation.
+  - name: Demo evidence
+    description: Ephemeral, non-personal notification evidence for laboratory validation.
+paths:
+  /health:
+    get:
+      tags: [System]
+      operationId: getHealth
+      summary: Check whether the demonstrator is ready
+      responses:
+        "200":
+          description: The demonstrator is ready.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+  /api/v1/experiences:
+    get:
+      tags: [Experiences]
+      operationId: listExperiences
+      summary: List synthetic experience records
+      description: Returns only fictional demonstration records, never live commercial availability.
+      parameters:
+        - $ref: "#/components/parameters/Area"
+        - $ref: "#/components/parameters/Category"
+        - $ref: "#/components/parameters/Language"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Matching synthetic records.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperienceCollection"
+  /api/v1/experiences/search:
+    get:
+      tags: [Experiences]
+      operationId: searchExperiences
+      summary: Search the synthetic catalogue
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Plain-text query matched against the synthetic catalogue.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+          example: weaving
+        - $ref: "#/components/parameters/Area"
+        - $ref: "#/components/parameters/Category"
+        - $ref: "#/components/parameters/Language"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Search result from the synthetic catalogue.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperienceCollection"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /api/v1/experiences/{id}:
+    get:
+      tags: [Experiences]
+      operationId: getExperience
+      summary: Get one synthetic experience by identifier or slug
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: exp-bansko-loom-patterns
+      responses:
+        "200":
+          description: A synthetic experience record.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperienceResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /api/v1/concierge/search:
+    post:
+      tags: [Concierge]
+      operationId: searchConcierge
+      summary: Retrieve grounded suggestions from the synthetic catalogue
+      description: |
+        Returns catalogue records and a disclosure. It does not claim organic discovery by an external
+        assistant and must not invent an experience outside the returned source records.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConciergeSearchInput"
+      responses:
+        "200":
+          description: Grounded synthetic suggestions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConciergeSearchResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /api/v1/booking-requests:
+    post:
+      tags: [Booking requests]
+      operationId: createBookingRequest
+      summary: Create a synthetic request for host review
+      description: |
+        Creates an expression of interest only. The result is always pending host confirmation. This API
+        has no payment, checkout, automatic confirmation or contract-creation capability. The example.com
+        email restriction prevents this public demo contract from accepting a real visitor address.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookingRequestInput"
+            example:
+              experienceId: exp-bansko-loom-patterns
+              visitor:
+                displayName: Synthetic Demo Visitor
+                email: visitor@example.com
+              partySize: 2
+              preferredDate: 2026-09-04
+              message: Synthetic demonstration request only.
+              synthetic: true
+      responses:
+        "201":
+          description: A synthetic request awaiting separate host confirmation; no payment was collected.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookingRequest"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /api/v1/demo/outbox:
+    get:
+      tags: [Demo evidence]
+      operationId: getDemoOutbox
+      summary: Inspect synthetic host-notification evidence
+      description: Returns no visitor identity or contact data and performs no external delivery.
+      responses:
+        "200":
+          description: Synthetic notification records created in this process.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [entries, count, synthetic]
+                properties:
+                  entries:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DemoOutboxMessage"
+                  count:
+                    type: integer
+                    minimum: 0
+                  synthetic:
+                    const: true
+components:
+  parameters:
+    Area:
+      name: area
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/Settlement"
+    Category:
+      name: category
+      in: query
+      required: false
+      schema:
+        $ref: "#/components/schemas/Category"
+    Language:
+      name: language
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: "^[a-z]{2}$"
+      example: en
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 12
+        default: 12
+  responses:
+    BadRequest:
+      description: The request did not satisfy the demonstration contract.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: The requested synthetic record does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Health:
+      type: object
+      additionalProperties: false
+      required: [status, version, dataset]
+      properties:
+        status:
+          const: ok
+        version:
+          type: string
+          example: 0.1.0-trl4
+        dataset:
+          const: synthetic
+    Settlement:
+      type: string
+      enum: [Bansko, Razlog, Banya, Dobarsko]
+    Category:
+      type: string
+      enum: [craft, culinary, heritage, nature]
+    IndicativePrice:
+      type: object
+      additionalProperties: false
+      required: [amount, currency]
+      properties:
+        amount:
+          type: number
+          minimum: 0
+          multipleOf: 0.01
+        currency:
+          const: EUR
+    SyntheticHost:
+      type: object
+      additionalProperties: false
+      required: [id, displayName, synthetic]
+      properties:
+        id:
+          type: string
+          pattern: "^host-demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        displayName:
+          type: string
+          pattern: "^Synthetic Host "
+        synthetic:
+          const: true
+    Availability:
+      type: object
+      additionalProperties: false
+      required: [mode, note]
+      properties:
+        mode:
+          const: by_request
+        note:
+          type: string
+          minLength: 20
+          maxLength: 240
+    Experience:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - slug
+        - name
+        - description
+        - category
+        - settlement
+        - languages
+        - durationMinutes
+        - indicativePrice
+        - host
+        - availability
+        - synthetic
+        - bookingMode
+        - confirmationMode
+        - paymentMode
+      properties:
+        id:
+          type: string
+          pattern: "^exp-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        slug:
+          type: string
+          pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        name:
+          type: string
+          minLength: 3
+          maxLength: 120
+        description:
+          type: string
+          minLength: 20
+          maxLength: 500
+        category:
+          $ref: "#/components/schemas/Category"
+        settlement:
+          $ref: "#/components/schemas/Settlement"
+        languages:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            pattern: "^[a-z]{2}$"
+        durationMinutes:
+          type: integer
+          minimum: 30
+          maximum: 480
+        indicativePrice:
+          $ref: "#/components/schemas/IndicativePrice"
+        host:
+          $ref: "#/components/schemas/SyntheticHost"
+        availability:
+          $ref: "#/components/schemas/Availability"
+        synthetic:
+          const: true
+        bookingMode:
+          const: request_only
+        confirmationMode:
+          const: host_required
+        paymentMode:
+          const: off_platform_direct_to_host
+    ExperienceCollection:
+      type: object
+      additionalProperties: false
+      required: [count, experiences, synthetic]
+      properties:
+        count:
+          type: integer
+          minimum: 0
+          maximum: 12
+        experiences:
+          type: array
+          items:
+            $ref: "#/components/schemas/Experience"
+        synthetic:
+          const: true
+    ExperienceResponse:
+      type: object
+      additionalProperties: false
+      required: [experience, sourceUrl, synthetic]
+      properties:
+        experience:
+          $ref: "#/components/schemas/Experience"
+        sourceUrl:
+          type: string
+          format: uri-reference
+        synthetic:
+          const: true
+    ConciergeSearchInput:
+      type: object
+      additionalProperties: false
+      required: [query]
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 200
+        area:
+          $ref: "#/components/schemas/Settlement"
+        category:
+          $ref: "#/components/schemas/Category"
+        language:
+          type: string
+          pattern: "^[a-z]{2}$"
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 12
+          default: 3
+    ConciergeSearchResponse:
+      type: object
+      additionalProperties: false
+      required: [answer, matches, sources, groundedInCatalog, synthetic]
+      properties:
+        answer:
+          type: string
+          description: Grounded summary that discloses the synthetic and request-only nature of every result.
+        matches:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConciergeMatch"
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConciergeSource"
+        groundedInCatalog:
+          const: true
+        synthetic:
+          const: true
+    BookingRequestInput:
+      type: object
+      additionalProperties: false
+      required: [experienceId, visitor, partySize, synthetic]
+      properties:
+        experienceId:
+          type: string
+          pattern: "^exp-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        visitor:
+          type: object
+          additionalProperties: false
+          required: [displayName, email]
+          properties:
+            displayName:
+              type: string
+              minLength: 1
+              maxLength: 80
+            email:
+              type: string
+              format: email
+              pattern: "^[^@\\s]+@example\\.com$"
+              maxLength: 254
+        partySize:
+          type: integer
+          minimum: 1
+          maximum: 12
+        preferredDate:
+          type: string
+          format: date
+        message:
+          type: string
+          maxLength: 500
+        synthetic:
+          const: true
+    BookingRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - experienceId
+        - hostId
+        - status
+        - synthetic
+        - requiresHostConfirmation
+        - paymentCollected
+        - automaticallyConfirmed
+        - createdAt
+      properties:
+        id:
+          type: string
+        experienceId:
+          type: string
+        hostId:
+          type: string
+        status:
+          const: pending_host_confirmation
+        synthetic:
+          const: true
+        requiresHostConfirmation:
+          const: true
+        paymentCollected:
+          const: false
+        automaticallyConfirmed:
+          const: false
+        createdAt:
+          type: string
+          format: date-time
+    ConciergeMatch:
+      type: object
+      additionalProperties: false
+      required: [experience, sourceUrl]
+      properties:
+        experience:
+          $ref: "#/components/schemas/Experience"
+        sourceUrl:
+          type: string
+          format: uri
+    ConciergeSource:
+      type: object
+      additionalProperties: false
+      required: [index, experienceId, title, url]
+      properties:
+        index:
+          type: integer
+          minimum: 1
+        experienceId:
+          type: string
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+    DemoOutboxMessage:
+      type: object
+      additionalProperties: false
+      required: [requestId, experienceId, hostId, status, synthetic, createdAt]
+      properties:
+        requestId:
+          type: string
+        experienceId:
+          type: string
+        hostId:
+          type: string
+        status:
+          const: received
+        synthetic:
+          const: true
+        createdAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      additionalProperties: false
+      required: [error]
+      properties:
+        error:
+          type: object
+          additionalProperties: false
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string

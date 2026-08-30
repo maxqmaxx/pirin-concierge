@@ -1,0 +1,32 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+private/
+
+# Data that must never enter the public demonstrator
+data/raw/
+data/private/
+exports/
+
+# Logs and editor files
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Temporary files
+tmp/
+.tmp/

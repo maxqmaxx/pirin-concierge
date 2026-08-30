@@ -1,0 +1,24 @@
+services:
+  pirin-concierge:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      DEMO_MODE: "true"
+      PUBLIC_BASE_URL: "http://localhost:3000"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+      ALLOWED_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pirin-concierge.example/schemas/booking-request.schema.json",
+  "title": "Pirin Concierge synthetic booking request input",
+  "description": "Input for a synthetic demonstration request. It cannot pay for or confirm an experience.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["experienceId", "visitor", "partySize", "synthetic"],
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "pattern": "^exp-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "visitor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayName", "email"],
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "pattern": "^[^@\\s]+@example\\.com$",
+          "maxLength": 254
+        }
+      }
+    },
+    "partySize": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    },
+    "preferredDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "synthetic": {
+      "const": true
+    }
+  }
+}

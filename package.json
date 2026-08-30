@@ -1,0 +1,61 @@
+{
+  "name": "pirin-concierge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source TRL 4 reference demonstrator for discoverable rural experiences in the Pirin region.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxqmaxx/pirin-concierge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maxqmaxx/pirin-concierge/issues"
+  },
+  "homepage": "https://github.com/maxqmaxx/pirin-concierge#readme",
+  "keywords": [
+    "rural-innovation",
+    "tourism",
+    "model-context-protocol",
+    "openapi",
+    "schema-org",
+    "smart-era"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "mcp:stdio": "tsx src/mcp-stdio.ts",
+    "typecheck": "tsc --noEmit",
+    "openapi:lint": "redocly lint openapi/openapi.yaml",
+    "lint": "biome lint src tests",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run openapi:lint && npm run test:coverage && npm run build"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.1",
+    "@modelcontextprotocol/hono": "2.0.0",
+    "@modelcontextprotocol/server": "2.0.0",
+    "hono": "4.13.5",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.11",
+    "@modelcontextprotocol/client": "2.0.0",
+    "@redocly/cli": "^2.49.0",
+    "@types/node": "26.4.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vitest": "4.1.11",
+    "yaml": "2.9.0"
+  }
+}

@@ -1,0 +1,290 @@
+[
+  {
+    "id": "exp-bansko-loom-patterns",
+    "slug": "bansko-loom-patterns",
+    "name": "Loom Pattern Introduction",
+    "description": "A fully synthetic demonstration listing for a small-group introduction to arranging simple weaving patterns on a tabletop loom.",
+    "category": "craft",
+    "settlement": "Bansko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 90,
+    "indicativePrice": { "amount": 24, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-bansko-a",
+      "displayName": "Synthetic Host Bansko A",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-bansko-wood-ornament-sketch",
+    "slug": "bansko-wood-ornament-sketch",
+    "name": "Wood Ornament Sketch Session",
+    "description": "A fully synthetic demonstration listing for sketching geometric ornament ideas before transferring one design to a small wooden sample.",
+    "category": "craft",
+    "settlement": "Bansko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 75,
+    "indicativePrice": { "amount": 22, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-bansko-b",
+      "displayName": "Synthetic Host Bansko B",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-bansko-tea-blending",
+    "slug": "bansko-tea-blending",
+    "name": "Mountain Tea Blending Table",
+    "description": "A fully synthetic demonstration listing for comparing dried herb aromas and assembling a small non-medical tea blend.",
+    "category": "culinary",
+    "settlement": "Bansko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 60,
+    "indicativePrice": { "amount": 18, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-bansko-c",
+      "displayName": "Synthetic Host Bansko C",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-razlog-wool-felting",
+    "slug": "razlog-wool-felting",
+    "name": "Wool Felting Basics",
+    "description": "A fully synthetic demonstration listing for learning the basic steps used to shape a small decorative felt sample.",
+    "category": "craft",
+    "settlement": "Razlog",
+    "languages": ["bg", "en"],
+    "durationMinutes": 90,
+    "indicativePrice": { "amount": 23, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-razlog-a",
+      "displayName": "Synthetic Host Razlog A",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-razlog-textile-printing",
+    "slug": "razlog-textile-printing",
+    "name": "Printed Textile Motifs",
+    "description": "A fully synthetic demonstration listing for composing and printing a repeating motif on a practice piece of fabric.",
+    "category": "craft",
+    "settlement": "Razlog",
+    "languages": ["bg", "en"],
+    "durationMinutes": 105,
+    "indicativePrice": { "amount": 26, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-razlog-b",
+      "displayName": "Synthetic Host Razlog B",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-razlog-clay-keepsake",
+    "slug": "razlog-clay-keepsake",
+    "name": "Clay Keepsake Studio",
+    "description": "A fully synthetic demonstration listing for shaping and decorating a small air-dry clay keepsake in a guided studio format.",
+    "category": "craft",
+    "settlement": "Razlog",
+    "languages": ["bg", "en"],
+    "durationMinutes": 90,
+    "indicativePrice": { "amount": 25, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-razlog-c",
+      "displayName": "Synthetic Host Razlog C",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-banya-botanical-soap",
+    "slug": "banya-botanical-soap",
+    "name": "Botanical Soap Workshop",
+    "description": "A fully synthetic demonstration listing for assembling a decorative soap sample from pre-prepared craft materials.",
+    "category": "craft",
+    "settlement": "Banya",
+    "languages": ["bg", "en"],
+    "durationMinutes": 75,
+    "indicativePrice": { "amount": 21, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-banya-a",
+      "displayName": "Synthetic Host Banya A",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-banya-orchard-preserve-table",
+    "slug": "banya-orchard-preserve-table",
+    "name": "Orchard Preserve Tasting Table",
+    "description": "A fully synthetic demonstration listing for comparing small preserve samples and discussing a fictional seasonal recipe notebook.",
+    "category": "culinary",
+    "settlement": "Banya",
+    "languages": ["bg", "en"],
+    "durationMinutes": 60,
+    "indicativePrice": { "amount": 17, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-banya-b",
+      "displayName": "Synthetic Host Banya B",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-banya-embroidered-card",
+    "slug": "banya-embroidered-card",
+    "name": "Embroidered Card Workshop",
+    "description": "A fully synthetic demonstration listing for stitching a simple geometric motif onto a paper keepsake card.",
+    "category": "craft",
+    "settlement": "Banya",
+    "languages": ["bg", "en"],
+    "durationMinutes": 75,
+    "indicativePrice": { "amount": 19, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-banya-c",
+      "displayName": "Synthetic Host Banya C",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-dobarsko-village-story-walk",
+    "slug": "dobarsko-village-story-walk",
+    "name": "Village Story Walk",
+    "description": "A fully synthetic demonstration listing for a short settlement walk built around fictional prompts about buildings and everyday life.",
+    "category": "heritage",
+    "settlement": "Dobarsko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 90,
+    "indicativePrice": { "amount": 20, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-dobarsko-a",
+      "displayName": "Synthetic Host Dobarsko A",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-dobarsko-song-listening-circle",
+    "slug": "dobarsko-song-listening-circle",
+    "name": "Folk Song Listening Circle",
+    "description": "A fully synthetic demonstration listing for a small listening and call-and-response session using fictional programme notes.",
+    "category": "heritage",
+    "settlement": "Dobarsko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 60,
+    "indicativePrice": { "amount": 16, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-dobarsko-b",
+      "displayName": "Synthetic Host Dobarsko B",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  },
+  {
+    "id": "exp-dobarsko-painted-keepsake",
+    "slug": "dobarsko-painted-keepsake",
+    "name": "Painted Wooden Keepsake",
+    "description": "A fully synthetic demonstration listing for painting a small pre-cut wooden shape with simple decorative colours.",
+    "category": "craft",
+    "settlement": "Dobarsko",
+    "languages": ["bg", "en"],
+    "durationMinutes": 75,
+    "indicativePrice": { "amount": 18, "currency": "EUR" },
+    "host": {
+      "id": "host-demo-dobarsko-c",
+      "displayName": "Synthetic Host Dobarsko C",
+      "synthetic": true
+    },
+    "availability": {
+      "mode": "by_request",
+      "note": "A time is agreed directly with the synthetic demo host after a request."
+    },
+    "synthetic": true,
+    "bookingMode": "request_only",
+    "confirmationMode": "host_required",
+    "paymentMode": "off_platform_direct_to_host"
+  }
+]
