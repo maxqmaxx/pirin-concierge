@@ -1,0 +1,121 @@
+{
+  "timestampUTC": "2026-09-13T12:42:37.872Z",
+  "node": "v25.9.0",
+  "gitHead": "91c782ca80181583a03bf8050651c25b6c031f8b",
+  "workingTreeDirty": true,
+  "scope": "Built processes; loopback HTTP and stdio; synthetic catalogue; no LLM or real host",
+  "sourceChecksums": {
+    ".github/workflows/ci.yml": "aced85d2ed1415fc56056c207dc4100661d5617699c8cb0c807479d7297ae92c",
+    "data/demo/experiences.json": "ecc119c2197998e1fc9968f0b41b1692ec23dbb94c6a786fd9421cc9462a78c2",
+    "openapi/openapi.yaml": "57f079e52de07f0007909950bb69df8847514dcba15133bc0de8828843f420e8",
+    "package-lock.json": "ab7db8b57f8cf62fcb8ff39424bda3e31b78e1c35a65b3b26300596f32b39cd9",
+    "package.json": "475f9fe8b22e1e381492cf68af1606a0f8a141b2ed9b59ece7bdf910cb83501f",
+    "scripts/record-lab-demo.mjs": "bfff755cb2cea881882695b214c5022057dacf72b21798884d31b71942b76f29",
+    "scripts/verify-transports.mjs": "51fe5a86b267b7658199ce9696cc7a587fa1a6b146f1ee392053eebccbc0017d",
+    "scripts/write-evidence.mjs": "087ecd47080a1e399a200031d16a4de3292b4d856a83fcdc1be422045b357780",
+    "src/app.ts": "31caea2a54f4df861c226045e509d669fdede09c9f9c17ef612a6198b9ec3879",
+    "src/booking.ts": "c7a12b6a0ba9369ecb94db2b92f1aef476a7b08471ccd5612fbf83a2ac3b6491",
+    "src/catalog.ts": "7f14a5e8fdc1ddc433ab1d4952f47afa3cf895a6ec1de140f8f5c9db3baf6260",
+    "src/concierge.ts": "4532ccca08a795d33a26db1f5dffe3012edb2b8e0259e2618fcd38f26dd2570d",
+    "src/jsonld.ts": "8cbffca8a9326af05b1217664ade5d0adcb5464c3ba7b9ebef5a243017d10f1d",
+    "src/mcp-stdio.ts": "8495cad2fcd178876a5c024474466555faa428074c6927b97f5fa6be49b1cfd7",
+    "src/mcp.ts": "a3061ceca76cd4d5c9f2c37115ba670943b956c7cb9f558aa6c00802e874809a",
+    "src/server.ts": "a163e074665ce5f4264eeaa272d03cd7402753d3b9bf14b491edfc4178642030",
+    "src/types.ts": "ed33182f391e888361a054fa30c53c66a0115c86833d0acae92e16fe98dce800",
+    "tests/api.test.ts": "60044c3eb01cea1f960f393af1abc60c4e3b10fa74f0f2e984057559c91b74e6",
+    "tests/booking.test.ts": "b2abfb79f37654b10b7eb542e5555c8418520ead8ba18ef25a14e011a1883503",
+    "tests/catalog.test.ts": "273cf58e30b59de0ddea87975c399aef7982a52fac6c05cddefd21e906615c38",
+    "tests/contracts.test.ts": "a7fed0081c75c18c9f9ebcfaa9ada5236d4f6c40ba7c8c7cee1fa1c35f03b0b8",
+    "tests/jsonld.test.ts": "433ecf9f87f79af9c4edebbc4fd0c90d5c5ac73d532d557548816bf7ab1ce8a8",
+    "tests/mcp.test.ts": "7f57d9f8083c9bb0438d3ae9a6779bc321ef64bfdb43196da689c63014a633b4"
+  },
+  "observations": [
+    {
+      "step": "Built HTTP entry point",
+      "host": "127.0.0.1",
+      "status": 200
+    },
+    {
+      "step": "HTTP discovery, JSON-LD and OpenAPI",
+      "seller": {
+        "@type": "Organization",
+        "@id": "http://127.0.0.1:53990/experiences/bansko-loom-patterns#host",
+        "name": "Synthetic Host Bansko A"
+      }
+    },
+    {
+      "step": "HTTP rejects payment and confirmation fields",
+      "outboxCount": 0
+    },
+    {
+      "step": "MCP over real loopback HTTP",
+      "protocol": "2026-07-28",
+      "tools": [
+        "get_experience",
+        "initiate_booking_request",
+        "list_by_area",
+        "search_experiences"
+      ],
+      "foundIds": [
+        "exp-bansko-loom-patterns"
+      ],
+      "receipt": {
+        "id": "demo-request-0001",
+        "experienceId": "exp-bansko-loom-patterns",
+        "hostId": "host-demo-bansko-a",
+        "status": "pending_host_confirmation",
+        "requiresHostConfirmation": true,
+        "paymentCollected": false,
+        "automaticallyConfirmed": false,
+        "synthetic": true,
+        "createdAt": "2026-09-13T12:42:36.873Z"
+      },
+      "rejectsNonSyntheticEmail": true,
+      "rejectsMissingExperience": true
+    },
+    {
+      "step": "MCP request observed through HTTP outbox",
+      "outbox": {
+        "entries": [
+          {
+            "requestId": "demo-request-0001",
+            "experienceId": "exp-bansko-loom-patterns",
+            "hostId": "host-demo-bansko-a",
+            "status": "received",
+            "synthetic": true,
+            "createdAt": "2026-09-13T12:42:36.873Z"
+          }
+        ],
+        "count": 1,
+        "synthetic": true
+      }
+    },
+    {
+      "step": "MCP over built stdio child process",
+      "protocol": "2026-07-28",
+      "tools": [
+        "get_experience",
+        "initiate_booking_request",
+        "list_by_area",
+        "search_experiences"
+      ],
+      "foundIds": [
+        "exp-bansko-loom-patterns"
+      ],
+      "receipt": {
+        "id": "demo-request-0001",
+        "experienceId": "exp-bansko-loom-patterns",
+        "hostId": "host-demo-bansko-a",
+        "status": "pending_host_confirmation",
+        "requiresHostConfirmation": true,
+        "paymentCollected": false,
+        "automaticallyConfirmed": false,
+        "synthetic": true,
+        "createdAt": "2026-09-13T12:42:37.838Z"
+      },
+      "rejectsNonSyntheticEmail": true,
+      "rejectsMissingExperience": true
+    }
+  ],
+  "result": "PASS"
+}

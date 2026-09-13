@@ -31,11 +31,13 @@
     "mcp:stdio": "tsx src/mcp-stdio.ts",
     "typecheck": "tsc --noEmit",
     "openapi:lint": "redocly lint openapi/openapi.yaml",
-    "lint": "biome lint src tests",
+    "lint": "biome lint src tests scripts",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:transports": "node scripts/verify-transports.mjs",
+    "evidence:record": "node scripts/record-lab-demo.mjs",
     "verify": "npm run format:check && npm run lint && npm run typecheck && npm run openapi:lint && npm run test:coverage && npm run build"
   },
   "dependencies": {

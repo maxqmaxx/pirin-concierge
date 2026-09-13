@@ -1,0 +1,63 @@
+
+> pirin-concierge@0.1.0 verify
+> npm run format:check && npm run lint && npm run typecheck && npm run openapi:lint && npm run test:coverage && npm run build
+
+
+> pirin-concierge@0.1.0 format:check
+> biome format .
+
+Checked 23 files in 7ms. No fixes applied.
+
+> pirin-concierge@0.1.0 lint
+> biome lint src tests
+
+Checked 15 files in 10ms. No fixes applied.
+
+> pirin-concierge@0.1.0 typecheck
+> tsc --noEmit
+
+
+> pirin-concierge@0.1.0 openapi:lint
+> redocly lint openapi/openapi.yaml
+
+validating openapi/openapi.yaml...
+openapi/openapi.yaml: validated in 30ms
+
+Woohoo! Your API description is valid. 🎉
+
+
+> pirin-concierge@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v4.1.11 /private/tmp/smartera-20260906/lab
+      Coverage enabled with v8
+
+
+ Test Files  6 passed (6)
+      Tests  28 passed (28)
+   Start at  14:54:08
+   Duration  726ms (transform 259ms, setup 0ms, import 1.01s, tests 429ms, environment 2ms)
+
+ % Coverage report from v8
+--------------|---------|----------|---------|---------|------------------------
+File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s      
+--------------|---------|----------|---------|---------|------------------------
+All files     |    87.5 |    77.44 |   90.24 |   87.45 |                        
+ app.ts       |   86.52 |    69.23 |   89.28 |   86.42 | ...243,286,303,326,381 
+ booking.ts   |    90.9 |    86.44 |     100 |   90.56 | 36,98,104,107,130      
+ catalog.ts   |   87.71 |     92.3 |   86.95 |   88.88 | 14,39,46,119,148-149   
+ concierge.ts |   93.33 |       60 |     100 |   92.85 | 12                     
+ mcp.ts       |      80 |       50 |   84.61 |   78.78 | 58-59,121,179-182,197  
+--------------|---------|----------|---------|---------|------------------------
+
+=============================== Coverage summary ===============================
+Statements   : 87.5% ( 273/312 )
+Branches     : 77.44% ( 206/266 )
+Functions    : 90.24% ( 74/82 )
+Lines        : 87.45% ( 265/303 )
+================================================================================
+
+> pirin-concierge@0.1.0 build
+> tsc -p tsconfig.build.json
+

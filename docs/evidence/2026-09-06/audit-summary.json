@@ -1,0 +1,15 @@
+{
+  "observedUTC": "2026-09-06T13:00:33.547329+00:00",
+  "command": "npm audit --audit-level=high --json",
+  "exitCode": 0,
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "environment": "isolated archive of 91c782ca80181583a03bf8050651c25b6c031f8b",
+  "note": "Summary transcribed from successful tool output; not a fabricated raw npm report."
+}

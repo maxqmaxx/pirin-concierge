@@ -1,145 +1,40 @@
-# TRL 4 laboratory demo script
+# Laboratory demonstration walkthrough
 
-## Status
+The reproducible observations are in the [13 September evidence pack](evidence/2026-09-13/README.md). This page is a walkthrough; it does not claim that a video or public deployment exists.
 
-This is a recording and live-demonstration plan, not evidence that the steps have passed. Record observed results only from the intended release commit, and retain failures rather than editing the narrative to imply success.
-
-Target duration: 2–3 minutes.
-
-## Evidence header
-
-Complete this before recording:
-
-| Field | Value |
-|---|---|
-| UTC date/time | `TODO` |
-| Repository | `https://github.com/maxqmaxx/pirin-concierge` (public) |
-| Commit SHA | `TODO` |
-| Release | `TODO: RELEASE_URL` |
-| Public demo | `TODO: DEMO_URL` or `local laboratory run` |
-| Node/npm versions | `TODO` |
-| MCP SDK/version | `TODO` |
-| MCP client/version | `TODO` |
-| MCP transport | `TODO` |
-| Data version/checksum | `TODO` |
-
-Use a clean screen and synthetic identities. Disable unrelated notifications and inspect every visible browser tab, terminal history, environment variable, account avatar, email address, and request payload before recording.
-
-## Preflight
-
-From a clean clone of the exact release commit:
+## Automated route
 
 ```bash
 npm ci
-npm test
-npm run dev
+npm run verify
+npm run test:transports
+npm run evidence:record
 ```
 
-For a local stdio MCP demonstration:
+The transport scenario launches the built service on a disposable loopback port, checks discovery, JSON-LD and OpenAPI, rejects payment/confirmation fields, and calls all four tools with official MCP clients over real HTTP and stdio. It checks that a request created through MCP appears in the HTTP outbox. Processes are closed afterwards.
+
+## Interactive route
 
 ```bash
-npm run mcp:stdio
+npm run build
+npm start
 ```
 
-Capture the unedited command results or link the corresponding CI run. If a command fails, stop and record the failure in the evidence report; do not present the release as verified.
+Open http://127.0.0.1:3000 and inspect a synthetic experience. The page identifies the synthetic host and contains JSON-LD. The API contract is served at /openapi.yaml.
 
-## Recording sequence
+An MCP client can connect explicitly to http://127.0.0.1:3000/mcp. For stdio, configure it to launch `node dist/mcp-stdio.js` from the repository directory.
 
-### 0:00–0:20 — Scope and provenance
+1. List the tools: search_experiences, get_experience, list_by_area, initiate_booking_request.
+2. Search for weaving and inspect exp-bansko-loom-patterns.
+3. List offers in Banya.
+4. Submit a synthetic request using a visitor email at example.com.
+5. Verify pending_host_confirmation, requiresHostConfirmation=true, paymentCollected=false and automaticallyConfirmed=false.
+6. For an HTTP MCP connection, inspect /api/v1/demo/outbox for the same request ID. Stdio runs in its own process and has a separate mock outbox.
 
-Show the repository landing page, commit SHA, release tag, and status notice.
+A request represents interest only. The independent host remains the seller and must agree any transaction outside the demonstrator.
 
-Suggested narration:
+## Optional recording
 
-> “Pirin Concierge is an application-stage laboratory demonstrator using synthetic data. It exposes rural experience discovery through REST/OpenAPI, JSON-LD, and MCP. It creates requests only: the independent host remains the seller, confirms availability, and handles any later payment directly.”
+A short recording can show the repository revision, successful CI run, synthetic catalogue, source-linked results and request receipt. State that retrieval is deterministic and the client is explicitly connected. Use synthetic inputs and omit unrelated account information.
 
-Do not claim EU funding, SMART ERA endorsement, production readiness, or completed regional validation.
-
-### 0:20–0:45 — Reproducible catalogue
-
-Show:
-
-- the synthetic-data notice;
-- the test/validation summary tied to the commit;
-- a catalogue page or `GET /api/v1/experiences` response;
-- representative records from multiple Pirin localities.
-
-Point out stable identifiers and `synthetic: true` where exposed. Do not show real host details or copied photographs.
-
-### 0:45–1:10 — OpenAPI and JSON-LD
-
-Open `openapi/openapi.yaml` or generated API documentation and execute a read-only catalogue request. Then inspect one experience page's JSON-LD.
-
-Verify on screen that:
-
-- the JSON-LD is parseable;
-- the experience/offer refers to the same catalogue identifier;
-- `Offer.seller` is the synthetic host, not Pirin Concierge;
-- no payment or confirmed-booking action is advertised.
-
-### 1:10–1:55 — Explicit MCP connection
-
-Show the MCP Inspector or another standards-compliant client configuration so it is clear that the client is explicitly connected to Pirin Concierge. State the client, version, transport, and server commit.
-
-Demonstrate:
-
-1. tool discovery listing all four expected tools;
-2. `search_experiences` with a rural-interest query;
-3. `get_experience` for one returned stable identifier;
-4. `list_by_area` for a supported locality.
-
-Show that results cite or include catalogue record identifiers. Do not describe the behaviour as automatic discovery by ChatGPT or another general-purpose client.
-
-### 1:55–2:30 — Request-only hand-off
-
-Call `initiate_booking_request` with a fixed synthetic visitor identity and an experience from the preceding result. Show the mock outbox receiving it.
-
-Keep this result visible:
-
-```json
-{
-  "status": "pending_host_confirmation",
-  "requiresHostConfirmation": true,
-  "paymentCollected": false,
-  "automaticallyConfirmed": false
-}
-```
-
-State that the action is an expression of interest. The host must confirm outside the demonstrator, and no money or payment credential is processed.
-
-### 2:30–2:55 — Evidence and limitations
-
-Return to the evidence matrix and show the exact CI run/release links. Summarise:
-
-- laboratory and synthetic-data boundary;
-- tested interfaces;
-- no payment/automatic confirmation;
-- TRL 5/6 remain future controlled regional validation and demonstration work.
-
-## Required captures
-
-Retain alongside the release:
-
-- H.264 video with readable text and no personal data;
-- captions and plain-text transcript;
-- representative screenshots;
-- exact commands and outputs;
-- MCP client trace with secrets removed;
-- OpenAPI and schema-validation reports;
-- checksums for downloadable evidence assets;
-- commit SHA and immutable release URL.
-
-## Observation log
-
-| Step | Expected | Observed | Evidence URL/file | Result |
-|---|---|---|---|---|
-| Clean install | Dependencies resolve from lockfile | `TODO` | `TODO` | Not run |
-| Test suite | All mandatory checks pass | `TODO` | `TODO` | Not run |
-| Catalogue | Synthetic records display and validate | `TODO` | `TODO` | Not run |
-| OpenAPI | Contract parses and request succeeds | `TODO` | `TODO` | Not run |
-| JSON-LD | Host is `Offer.seller` | `TODO` | `TODO` | Not run |
-| MCP | Handshake/list/call succeeds for four tools | `TODO` | `TODO` | Not run |
-| Booking request | Mock outbox receives request-only hand-off | `TODO` | `TODO` | Not run |
-| Negative check | No payment or auto-confirm route/tool | `TODO` | `TODO` | Not run |
-
-Replace “Not run” only after executing the release commit. The completed log should be copied or linked from [`trl4-evidence.md`](trl4-evidence.md).
+No recording, hosted service, generative AI validation, EU funding, SMART ERA endorsement or TRL 6 field result is claimed by this walkthrough.

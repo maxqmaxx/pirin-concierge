@@ -1,0 +1,142 @@
+{
+  "timestampUTC": "2026-09-06T13:02:55.135Z",
+  "node": "v25.9.0",
+  "client": "@modelcontextprotocol/client 2.0.0",
+  "server": "@modelcontextprotocol/server 2.0.0",
+  "scope": "Synthetic lab; in-process HTTP and explicit MCP client; no generative model or real notification",
+  "sourceChecksums": {
+    "data/demo/experiences.json": "ecc119c2197998e1fc9968f0b41b1692ec23dbb94c6a786fd9421cc9462a78c2",
+    "openapi/openapi.yaml": "57f079e52de07f0007909950bb69df8847514dcba15133bc0de8828843f420e8",
+    "package-lock.json": "ab7db8b57f8cf62fcb8ff39424bda3e31b78e1c35a65b3b26300596f32b39cd9"
+  },
+  "observations": [
+    {
+      "step": "Health",
+      "status": 200,
+      "result": {
+        "status": "ok",
+        "version": "0.1.0-trl4",
+        "dataset": "synthetic"
+      }
+    },
+    {
+      "step": "REST discovery",
+      "ids": [
+        "exp-bansko-loom-patterns"
+      ]
+    },
+    {
+      "step": "JSON-LD",
+      "seller": {
+        "@type": "Organization",
+        "@id": "http://localhost/experiences/bansko-loom-patterns#host",
+        "name": "Synthetic Host Bansko A"
+      },
+      "reservation": {
+        "@type": "Reservation",
+        "reservationStatus": "https://schema.org/ReservationPending"
+      }
+    },
+    {
+      "step": "Deterministic concierge",
+      "answer": "The synthetic catalogue contains 3 relevant options: Loom Pattern Introduction in Bansko [1]; Wood Ornament Sketch Session in Bansko [2]; Wool Felting Basics in Razlog [3]. This is a request-only demonstration: availability and prices are indicative, and the host must confirm every request.",
+      "sources": [
+        {
+          "index": 1,
+          "experienceId": "exp-bansko-loom-patterns",
+          "title": "Loom Pattern Introduction",
+          "url": "http://localhost/experiences/bansko-loom-patterns"
+        },
+        {
+          "index": 2,
+          "experienceId": "exp-bansko-wood-ornament-sketch",
+          "title": "Wood Ornament Sketch Session",
+          "url": "http://localhost/experiences/bansko-wood-ornament-sketch"
+        },
+        {
+          "index": 3,
+          "experienceId": "exp-razlog-wool-felting",
+          "title": "Wool Felting Basics",
+          "url": "http://localhost/experiences/razlog-wool-felting"
+        }
+      ]
+    },
+    {
+      "step": "Unsupported query",
+      "answer": "No matching demo experience was found in the synthetic Pirin catalogue. This is a request-only demonstrator; try a broader activity, area, or language.",
+      "matches": 0
+    },
+    {
+      "step": "MCP handshake / list",
+      "transport": "InMemoryTransport",
+      "tools": [
+        "search_experiences",
+        "get_experience",
+        "list_by_area",
+        "initiate_booking_request"
+      ]
+    },
+    {
+      "step": "MCP search_experiences",
+      "arguments": {
+        "query": "weaving",
+        "limit": 3
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"experiences\": [\n    {\n      \"id\": \"exp-bansko-loom-patterns\",\n      \"slug\": \"bansko-loom-patterns\",\n      \"name\": \"Loom Pattern Introduction\",\n      \"description\": \"A fully synthetic demonstration listing for a small-group introduction to arranging simple weaving patterns on a tabletop loom.\",\n      \"category\": \"craft\",\n      \"settlement\": \"Bansko\",\n      \"languages\": [\n        \"bg\",\n        \"en\"\n      ],\n      \"durationMinutes\": 90,\n      \"indicativePrice\": {\n        \"amount\": 24,\n        \"currency\": \"EUR\"\n      },\n      \"host\": {\n        \"id\": \"host-demo-bansko-a\",\n        \"displayName\": \"Synthetic Host Bansko A\",\n        \"synthetic\": true\n      },\n      \"availability\": {\n        \"mode\": \"by_request\",\n        \"note\": \"A time is agreed directly with the synthetic demo host after a request.\"\n      },\n      \"synthetic\": true,\n      \"bookingMode\": \"request_only\",\n      \"confirmationMode\": \"host_required\",\n      \"paymentMode\": \"off_platform_direct_to_host\",\n      \"sourceUrl\": \"http://127.0.0.1:3000/experiences/bansko-loom-patterns\"\n    }\n  ],\n  \"count\": 1,\n  \"synthetic\": true\n}"
+        }
+      ]
+    },
+    {
+      "step": "MCP get_experience",
+      "arguments": {
+        "id": "exp-bansko-loom-patterns"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"experience\": {\n    \"id\": \"exp-bansko-loom-patterns\",\n    \"slug\": \"bansko-loom-patterns\",\n    \"name\": \"Loom Pattern Introduction\",\n    \"description\": \"A fully synthetic demonstration listing for a small-group introduction to arranging simple weaving patterns on a tabletop loom.\",\n    \"category\": \"craft\",\n    \"settlement\": \"Bansko\",\n    \"languages\": [\n      \"bg\",\n      \"en\"\n    ],\n    \"durationMinutes\": 90,\n    \"indicativePrice\": {\n      \"amount\": 24,\n      \"currency\": \"EUR\"\n    },\n    \"host\": {\n      \"id\": \"host-demo-bansko-a\",\n      \"displayName\": \"Synthetic Host Bansko A\",\n      \"synthetic\": true\n    },\n    \"availability\": {\n      \"mode\": \"by_request\",\n      \"note\": \"A time is agreed directly with the synthetic demo host after a request.\"\n    },\n    \"synthetic\": true,\n    \"bookingMode\": \"request_only\",\n    \"confirmationMode\": \"host_required\",\n    \"paymentMode\": \"off_platform_direct_to_host\",\n    \"sourceUrl\": \"http://127.0.0.1:3000/experiences/bansko-loom-patterns\"\n  },\n  \"synthetic\": true\n}"
+        }
+      ]
+    },
+    {
+      "step": "MCP list_by_area",
+      "arguments": {
+        "area": "Banya"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"area\": \"Banya\",\n  \"experiences\": [\n    {\n      \"id\": \"exp-banya-botanical-soap\",\n      \"slug\": \"banya-botanical-soap\",\n      \"name\": \"Botanical Soap Workshop\",\n      \"description\": \"A fully synthetic demonstration listing for assembling a decorative soap sample from pre-prepared craft materials.\",\n      \"category\": \"craft\",\n      \"settlement\": \"Banya\",\n      \"languages\": [\n        \"bg\",\n        \"en\"\n      ],\n      \"durationMinutes\": 75,\n      \"indicativePrice\": {\n        \"amount\": 21,\n        \"currency\": \"EUR\"\n      },\n      \"host\": {\n        \"id\": \"host-demo-banya-a\",\n        \"displayName\": \"Synthetic Host Banya A\",\n        \"synthetic\": true\n      },\n      \"availability\": {\n        \"mode\": \"by_request\",\n        \"note\": \"A time is agreed directly with the synthetic demo host after a request.\"\n      },\n      \"synthetic\": true,\n      \"bookingMode\": \"request_only\",\n      \"confirmationMode\": \"host_required\",\n      \"paymentMode\": \"off_platform_direct_to_host\",\n      \"sourceUrl\": \"http://127.0.0.1:3000/experiences/banya-botanical-soap\"\n    },\n    {\n      \"id\": \"exp-banya-orchard-preserve-table\",\n      \"slug\": \"banya-orchard-preserve-table\",\n      \"name\": \"Orchard Preserve Tasting Table\",\n      \"description\": \"A fully synthetic demonstration listing for comparing small preserve samples and discussing a fictional seasonal recipe notebook.\",\n      \"category\": \"culinary\",\n      \"settlement\": \"Banya\",\n      \"languages\": [\n        \"bg\",\n        \"en\"\n      ],\n      \"durationMinutes\": 60,\n      \"indicativePrice\": {\n        \"amount\": 17,\n        \"currency\": \"EUR\"\n      },\n      \"host\": {\n        \"id\": \"host-demo-banya-b\",\n        \"displayName\": \"Synthetic Host Banya B\",\n        \"synthetic\": true\n      },\n      \"availability\": {\n        \"mode\": \"by_request\",\n        \"note\": \"A time is agreed directly with the synthetic demo host after a request.\"\n      },\n      \"synthetic\": true,\n      \"bookingMode\": \"request_only\",\n      \"confirmationMode\": \"host_required\",\n      \"paymentMode\": \"off_platform_direct_to_host\",\n      \"sourceUrl\": \"http://127.0.0.1:3000/experiences/banya-orchard-preserve-table\"\n    },\n    {\n      \"id\": \"exp-banya-embroidered-card\",\n      \"slug\": \"banya-embroidered-card\",\n      \"name\": \"Embroidered Card Workshop\",\n      \"description\": \"A fully synthetic demonstration listing for stitching a simple geometric motif onto a paper keepsake card.\",\n      \"category\": \"craft\",\n      \"settlement\": \"Banya\",\n      \"languages\": [\n        \"bg\",\n        \"en\"\n      ],\n      \"durationMinutes\": 75,\n      \"indicativePrice\": {\n        \"amount\": 19,\n        \"currency\": \"EUR\"\n      },\n      \"host\": {\n        \"id\": \"host-demo-banya-c\",\n        \"displayName\": \"Synthetic Host Banya C\",\n        \"synthetic\": true\n      },\n      \"availability\": {\n        \"mode\": \"by_request\",\n        \"note\": \"A time is agreed directly with the synthetic demo host after a request.\"\n      },\n      \"synthetic\": true,\n      \"bookingMode\": \"request_only\",\n      \"confirmationMode\": \"host_required\",\n      \"paymentMode\": \"off_platform_direct_to_host\",\n      \"sourceUrl\": \"http://127.0.0.1:3000/experiences/banya-embroidered-card\"\n    }\n  ],\n  \"count\": 3,\n  \"synthetic\": true\n}"
+        }
+      ]
+    },
+    {
+      "step": "MCP request handoff",
+      "receipt": {
+        "id": "demo-request-0001",
+        "experienceId": "exp-bansko-loom-patterns",
+        "hostId": "host-demo-bansko-a",
+        "status": "pending_host_confirmation",
+        "requiresHostConfirmation": true,
+        "paymentCollected": false,
+        "automaticallyConfirmed": false,
+        "synthetic": true,
+        "createdAt": "2026-09-06T13:02:55.134Z"
+      },
+      "outbox": [
+        {
+          "requestId": "demo-request-0001",
+          "experienceId": "exp-bansko-loom-patterns",
+          "hostId": "host-demo-bansko-a",
+          "status": "received",
+          "synthetic": true,
+          "createdAt": "2026-09-06T13:02:55.134Z"
+        }
+      ]
+    }
+  ],
+  "result": "PASS"
+}

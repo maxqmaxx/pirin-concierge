@@ -1,162 +1,73 @@
-# TRL 4 evidence record
+# TRL 4 laboratory evidence record
 
-## Purpose and claim discipline
+**Updated 13 September 2026. Result: bounded laboratory integration observed.**
 
-This document is the auditable record for an **application-stage TRL 4 laboratory demonstrator**. It starts as a template. A design, source file, planned test, screenshot, or `TODO` is not by itself evidence that the integrated technology has been validated in a laboratory setting.
+The existing reference core was exercised before application. The observations below support the stated laboratory scope; they are not formal certification or a claim of production maturity.
 
-A [local pre-publication verification](evidence/local-verification-2026-08-30.md) records passing
-installation, contract, MCP, API, coverage, build, dependency and secret checks. A subsequent
-[GitHub Actions run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928) passed the
-automated gates on the published implementation commit. Release, public deployment, recording and
-independent reproduction remain pending.
+## Identity and reproducibility
 
-Do not mark the record “verified”, create a `v0.1.0-trl4` release, or cite the repository as completed TRL 4 evidence until all mandatory gates have an observed result tied to the same immutable commit.
-
-Publication of this repository does not establish TRL 5, TRL 6, production readiness, market adoption, or SMART ERA/EU endorsement.
-
-## Release identity
-
-| Field | Evidence value |
+| Item | Evidence |
 |---|---|
-| Repository | `https://github.com/maxqmaxx/pirin-concierge` (public) |
-| Commit SHA | `9e40d04302043ba916c13918783af1bcb3dffbed` |
-| Tag/release | `TODO: RELEASE_URL` |
-| Verification date/time (UTC) | `2026-08-30T14:20:01Z` (CI completion) |
-| Verifier(s) | Automated GitHub Actions workflow plus local maintainer verification |
-| Laboratory environment | GitHub-hosted `ubuntu-latest`, Node.js 20; local macOS verification documented separately |
-| MCP server SDK/version | `@modelcontextprotocol/server` 2.0.0 |
-| MCP client/version/transport | `@modelcontextprotocol/client` 2.0.0; in-memory and Streamable HTTP contract tests |
-| Demo-data version/checksum | `ecc119c2197998e1fc9968f0b41b1692ec23dbb94c6a786fd9421cc9462a78c2` |
-| CI run | [Successful run 33316553928](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928) |
-| Deployment | `TODO: DEMO_URL` — no public deployment claimed yet |
-| Video/transcript | `TODO: VIDEO_URL / TRANSCRIPT_URL` |
+| Repository | https://github.com/maxqmaxx/pirin-concierge |
+| Existing application-source baseline | 91c782ca80181583a03bf8050651c25b6c031f8b |
+| Earlier implementation | 9e40d04302043ba916c13918783af1bcb3dffbed |
+| Local verification | 13 September 2026; macOS; Node v25.9.0, npm 11.12.1 |
+| Installation | Fresh npm ci using the unchanged lockfile; 97 packages installed |
+| Verification | npm run verify, exit 0; 28/28 tests, formatting, lint, types, OpenAPI and build |
+| New process checks | Built HTTP server on loopback plus built MCP stdio child; both passed |
+| MCP client/server | Official TypeScript SDK 2.0.0; observed protocol 2026-07-28 |
+| Current evidence | [13 September pack](evidence/2026-09-13/README.md) |
+| CI | [Workflow runs](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml) |
+| Historical local verification | [6 September transcript](evidence/2026-09-06/transcript.json), [command output](evidence/2026-09-06/verify.log) |
+| Historical public CI | [Run 33316553928](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928) on the earlier implementation |
 
-Current status: **CODE AND CONTRACT GATES VERIFIED — release, deployment, recording and independent reproduction remain pending.**
+The 13 September change adds verification tooling, CI evidence capture and documentation. Application source, catalogue, OpenAPI contract, tests and dependency lockfile remain unchanged from the cited baseline. The local transport transcript deliberately records the pre-commit HEAD and a dirty working tree, with checksums identifying the exact tested files. It is not presented as a clean checkout of a later commit.
 
-## Claim under evaluation
+CI uses a fresh checkout of the published revision. Its transport transcript records that exact HEAD and file checksums. Use the successful workflow run for a given commit to distinguish CI evidence from the dated local snapshot.
 
-The release integrates, in a controlled laboratory environment:
+## Observed evidence
 
-- a validated synthetic catalogue of representative Pirin-area experiences;
-- read-only catalogue discovery through REST/OpenAPI and four MCP tools;
-- machine-readable Schema.org/JSON-LD with the host represented as seller;
-- catalogue-grounded concierge output with inspectable source-record identifiers;
-- initiation of a synthetic booking request into a mock outbox;
-- explicit safeguards preventing payment collection and automatic confirmation.
+| Capability | Observation | Result |
+|---|---|---|
+| Locked installation | npm ci completed from no node_modules directory | PASS |
+| Automated verification | 28 tests plus format, lint, type, contract, coverage and build gates | PASS |
+| Built HTTP entry point | Separate process; loopback health response and headers verified | PASS |
+| Catalogue and JSON-LD | REST retrieves the expected synthetic offer; page identifies its synthetic host as seller | PASS |
+| OpenAPI | Lint and contract tests pass; built server serves OpenAPI 3.1.0 | PASS |
+| MCP HTTP | Official client connects through a real loopback socket and calls all four tools | PASS |
+| MCP stdio | Official client launches the built entry point and calls all four tools | PASS |
+| Cross-interface handoff | Request initiated through MCP HTTP appears in the REST outbox with the same request ID | PASS |
+| No payments or auto-confirmation | Both MCP transports return pending_host_confirmation, requiresHostConfirmation=true, paymentCollected=false, automaticallyConfirmed=false | PASS |
+| Negative paths | Payment/confirmation fields rejected over HTTP without outbox changes; both MCP transports reject non-synthetic emails and missing offers | PASS |
+| Contact minimisation | Receipt and HTTP outbox do not expose the submitted synthetic visitor email | PASS, scoped |
+| Concierge grounding | In-process scenario produces three source-linked deterministic matches and an empty result for unsupported input | PASS, no LLM claim |
+| Dependency audit | npm audit --audit-level=high --json reports zero vulnerabilities | PASS at audit time |
+| Security assurance | Contract checks, security headers and dependency audit only; no independent penetration test or comprehensive security audit | Scope limitation |
 
-This paragraph defines the claim to test. It must not be read as an observed result until the gates below pass.
+Coverage is 87.45% of lines, 87.50% of statements, 77.44% of branches and 90.24% of functions. HTTP/stdio entry points are excluded from unit coverage and exercised by the separate process check.
 
-## Mandatory evidence matrix
+## Reproduction
 
-Use durable links or release-contained files. “Implemented” is not an acceptable observed result; record the command, output, and evaluator-visible artefact.
+```bash
+npm ci
+npm run verify
+npm run test:transports
+npm run evidence:record
+npm audit --audit-level=high
+```
 
-| ID | Capability / criterion | Repository basis | Required observation | Status | Evidence |
-|---|---|---|---|---|---|
-| E01 | Clean, reproducible installation | Lockfile and quick start | Fresh environment completes `npm ci` without manual source changes | Not run | `TODO` |
-| E02 | Automated verification | Tests and CI workflow | Required tests pass on the release SHA | Not run | `TODO` |
-| E03 | Build/start smoke test | Service entry point | Service starts and health endpoint responds | Not run | `TODO` |
-| E04 | Synthetic catalogue validity | `data/demo/`, JSON Schema | Every included record validates; identifiers are unique/references resolve | Not run | `TODO` |
-| E05 | Privacy/provenance boundary | Data notice and repository scan | No secrets, real personal data, private application material, or unlicensed assets identified | Not run | `TODO` |
-| E06 | OpenAPI contract | `openapi/openapi.yaml` | OpenAPI 3.1 document validates and runtime samples conform | Not run | `TODO` |
-| E07 | JSON-LD interoperability | Experience presentation | Every tested record emits parseable JSON-LD; host is `Offer.seller` | Not run | `TODO` |
-| E08 | Standard MCP connection | MCP server | Named standards-compliant client completes handshake and lists four tools | Not run | `TODO` |
-| E09 | MCP search | `search_experiences` | Tool returns catalogue-grounded, inspectable record identifiers | Not run | `TODO` |
-| E10 | MCP retrieval | `get_experience` | Tool returns the selected validated record consistently | Not run | `TODO` |
-| E11 | MCP area listing | `list_by_area` | Tool returns records for a supported locality | Not run | `TODO` |
-| E12 | Request hand-off | `initiate_booking_request` | Synthetic request reaches only the mock outbox | Not run | `TODO` |
-| E13 | Host confirmation invariant | API/MCP contract and tests | Response requires host confirmation and remains pending | Not run | `TODO` |
-| E14 | No payment | Architecture/contracts/tests | No payment credential, checkout, PSP, escrow, or `paymentCollected=true` path exists | Not run | `TODO` |
-| E15 | No automatic confirmation | Architecture/contracts/tests | No API/tool/state transition auto-confirms a booking | Not run | `TODO` |
-| E16 | Grounded concierge | Concierge tests/demo | At least three suggestions link back to existing catalogue records; unsupported claims are rejected/qualified | Not run | `TODO` |
-| E17 | Security baseline | Threat model and automated scans | No unresolved high/critical source, dependency, or secret-scan finding | Not run | `TODO` |
-| E18 | Evaluator reproduction | README and demo script | Independent clean-clone run completes the documented core scenario | Not run | `TODO` |
+The two scenario commands emit JSON only after assertions pass and accept `--output FILE.json`. CI captures their output and the dependency audit plus coverage summary as an artifact named for the commit SHA. CI artifacts expire after 30 days; the checked-in local pack remains available in repository history.
 
-Mandatory gate: E01–E18 must pass, or an evaluator-visible exception must narrowly redefine the release claim before it is labelled `trl4`.
+The first local transport attempt was blocked by sandbox permission to bind 127.0.0.1. The same scenario subsequently passed with local socket permission. This is recorded as an environment limitation, not hidden as an application failure.
 
-## Command and environment record
+## Limits of the claim
 
-Record exact commands rather than paraphrasing them. Add project-specific lint, type-check, schema, OpenAPI, security, and build commands from `package.json`/CI.
+- Synthetic catalogue, synthetic identities and fixed fixture dates; no available future slot is claimed.
+- Deterministic retrieval; no generative-model answer quality, bias evaluation or prompt-injection evaluation has been demonstrated.
+- Explicit MCP client configuration; no organic pickup by consumer assistants is claimed.
+- Mock outbox only; no actual host delivery, payment, confirmed booking or regional adoption.
+- Local maintainer/agent execution and automated CI, not an independent third-party assessment.
+- Runtime safeguards tested here do not establish GDPR compliance or the future pilot's processing locations.
+- TRL 5/6 still require authorised regional data, real host channels, appropriate AI integration, operational controls and field evaluation.
 
-| Sequence | Command | Exit code | Start/end UTC | Output artefact/checksum |
-|---:|---|---:|---|---|
-| 1 | `npm ci` | `TODO` | `TODO` | `TODO` |
-| 2 | `npm test` | `TODO` | `TODO` | `TODO` |
-| 3 | `npm run dev` plus health smoke check | `TODO` | `TODO` | `TODO` |
-| 4 | `npm run mcp:stdio` plus client test | `TODO` | `TODO` | `TODO` |
-| 5 | `TODO: project-specific verification command` | `TODO` | `TODO` | `TODO` |
-
-Clean-clone test location and initial state: `TODO`.
-
-## Request-only invariant record
-
-Attach representative API and MCP outputs, with synthetic identifiers only, and confirm:
-
-| Assertion | Expected | Observed | Test/evidence |
-|---|---|---|---|
-| Status after request initiation | `pending_host_confirmation` | `TODO` | `TODO` |
-| Host confirmation required | `true` | `TODO` | `TODO` |
-| Payment collected | `false` | `TODO` | `TODO` |
-| Seller | Independent synthetic host | `TODO` | `TODO` |
-| Request destination | Mock outbox only | `TODO` | `TODO` |
-| Payment endpoints/tools | Absent | `TODO` | `TODO` |
-| Automatic-confirmation transition | Absent | `TODO` | `TODO` |
-
-Any contradictory observation blocks the release claim.
-
-## Security and publication review
-
-| Review | Tool/method and version | Scope | Result | Evidence |
-|---|---|---|---|---|
-| Secret scan, including history | `TODO` | Fresh public repository and release history | Not run | `TODO` |
-| Personal-data/content allowlist review | `TODO` | All tracked files and release assets | Not run | `TODO` |
-| Dependency/SBOM review | `TODO` | Runtime/development dependencies | Not run | `TODO` |
-| Static analysis | `TODO` | Source and workflows | Not run | `TODO` |
-| Licence/provenance review | `TODO` | Source, docs, data, media, dependencies | Not run | `TODO` |
-| Threat-model control check | `TODO` | Release/deployment | Not run | `TODO` |
-
-Before making the repository public, also verify branch/ruleset protection, restricted Actions permissions, Dependabot, secret scanning/push protection where available, CodeQL/static analysis, and private vulnerability reporting. Record repository-setting screenshots or URLs without exposing administrative secrets.
-
-## Evidence asset manifest
-
-Release assets should include, where applicable:
-
-| Artefact | Filename/URL | SHA-256 | Status |
-|---|---|---|---|
-| Source archive | `TODO` | `TODO` | Pending |
-| Test report | `TODO` | `TODO` | Pending |
-| OpenAPI document | `TODO` | `TODO` | Pending |
-| Schema-validation report | `TODO` | `TODO` | Pending |
-| MCP trace with secrets removed | `TODO` | `TODO` | Pending |
-| SBOM | `TODO` | `TODO` | Pending |
-| Demo video | `TODO` | `TODO` | Pending |
-| Transcript/captions | `TODO` | `TODO` | Pending |
-| Evidence screenshots | `TODO` | `TODO` | Pending |
-| `SHA256SUMS` | `TODO` | `TODO` | Pending |
-
-## Limitations observed
-
-Record limitations from the actual run, including failed, flaky, skipped, manual, environment-dependent, inaccessible, or unsupported behaviour:
-
-`TODO: No verification run has yet been recorded.`
-
-At minimum retain these scope limitations unless later maturity work changes them:
-
-- synthetic data and laboratory conditions;
-- no live inventory guarantee;
-- request, not confirmed booking;
-- no payment processing;
-- no evidence of production availability or regional adoption;
-- MCP client explicitly configured, not organically discovered;
-- TRL 5/6 not established by this release.
-
-## Sign-off
-
-| Role | Name | Date (UTC) | Decision | Reference |
-|---|---|---|---|---|
-| Technical verifier | `TODO` | `TODO` | Pending | `TODO` |
-| Privacy/security reviewer | `TODO` | `TODO` | Pending | `TODO` |
-| Release owner | `TODO` | `TODO` | Pending | `TODO` |
-
-Final evidence decision: **PENDING**.
-
-When completed, change this only to a narrowly worded result such as “The named commit passed the documented application-stage TRL 4 laboratory evidence gates on DATE.” Do not generalise it to production readiness, another deployment, or a later TRL.
+The applicant remains responsible for the TRL self-declaration and rights to the software. The SMART ERA FAQ dated 31 August requires an honest account of existing laboratory validation; it does not require a formal TRL certificate or external audit upload at application.

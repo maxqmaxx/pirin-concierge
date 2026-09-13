@@ -2,47 +2,63 @@
 
 [![CI](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml)
 
-Pirin Concierge is an **application-stage TRL 4 laboratory demonstrator** for discovering rural experiences in Bulgaria's Pirin area through a small web/API catalogue, machine-readable metadata, and Model Context Protocol (MCP) tools.
+An open laboratory reference implementation for discovering rural experiences near Bansko and Razlog, Bulgaria. It connects a synthetic catalogue, Schema.org/JSON-LD, REST/OpenAPI, deterministic concierge responses and four Model Context Protocol (MCP) tools.
 
-> **Status:** The public source and automated laboratory checks are available as technical evidence for an application. The repository uses synthetic demonstration data only. A public deployment, release, recording, and completed TRL 4 evidence package must not be assumed until the remaining gates below contain dated links.
+**Laboratory integration has been exercised.** On 13 September 2026, a fresh locked installation passed 28 tests, formatting, lint, types, OpenAPI validation and build. Additional checks ran the built HTTP server and the built stdio server as separate processes, called all four MCP tools through both transports, and observed a pending request through the HTTP outbox.
 
-## Evaluator overview
+## Evidence for reviewers
 
-| Question | Answer |
-|---|---|
-| What is demonstrated? | Catalogue discovery, grounded concierge responses, Schema.org/JSON-LD publication, OpenAPI access, MCP access, and initiation of a booking **request**. |
-| What is deliberately excluded? | Payments, checkout, escrow, package sales, automatic confirmation, and production host/customer data. |
-| Who is the seller? | The independent host. Pirin Concierge is a discovery and request-routing layer, not the seller. |
-| What data is included? | A synthetic, representative demo catalogue. It contains no real host, traveller, booking, survey, or application data. |
-| What is the maturity claim? | Target evidence for an application-stage TRL 4 laboratory demonstrator. TRL 5 and TRL 6 require validation and demonstration with authorised participants in the Pirin region. |
-| Is this the complete Calivina product? | No. This is a bounded open-source reference demonstrator. Proprietary Calivina components are outside this repository and licence grant. |
-
-## Verification status
-
-The following table is intentionally conservative. Replace every `TODO` only after the linked artefact has been generated from the exact release commit.
-
-| Evidence | Status | Verifiable reference |
+| Evidence | Observed result | Inspect |
 |---|---|---|
-| Source and synthetic catalogue | **PASS — public and CI verified** | [`data/demo/`](data/demo/), [initial implementation commit](https://github.com/maxqmaxx/pirin-concierge/commit/9e40d04302043ba916c13918783af1bcb3dffbed) |
-| Automated test result | **PASS — 28/28 tests on Node 20** | [GitHub Actions run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928), [coverage record](docs/evidence/local-verification-2026-08-30.md) |
-| Reproducible release | **TODO — not yet published** | `TODO: RELEASE_URL` |
-| Public laboratory deployment | **TODO — not yet verified** | `TODO: DEMO_URL` |
-| MCP client demonstration | Official client contract tests pass in CI; recording pending | [MCP contract tests](tests/mcp.test.ts), [CI run](https://github.com/maxqmaxx/pirin-concierge/actions/runs/33316553928), `TODO: VIDEO_URL` |
-| Dated TRL 4 evidence record | Code/contract observations recorded; release gates pending | [`docs/trl4-evidence.md`](docs/trl4-evidence.md) |
+| Automated suite | 28/28 tests; all verification gates passed | [Evidence record](docs/trl4-evidence.md), [CI](https://github.com/maxqmaxx/pirin-concierge/actions/workflows/ci.yml) |
+| Real HTTP and stdio entry points | Both passed; four MCP tools each; protocol 2026-07-28 negotiated | [Transport transcript](docs/evidence/2026-09-13/transport-transcript.json) |
+| Discovery and request handoff | Synthetic catalogue results, JSON-LD seller, source-linked answers and pending request | [Laboratory transcript](docs/evidence/2026-09-13/lab-transcript.json) |
+| Negative checks | Payment/confirmation fields, non-synthetic email domains and missing experiences rejected | Transport transcript and contract tests |
+| Coverage | 87.45% lines, 77.44% branches; entry points checked separately by transport smoke test | [Coverage data](docs/evidence/2026-09-13/coverage-summary.json) |
+| Dependency audit | 0 reported vulnerabilities on 13 September; includes development dependencies | [Audit output](docs/evidence/2026-09-13/dependency-audit.json) |
+| Earlier laboratory baseline | 6 September run against source commit 91c782c | [Historical transcript](docs/evidence/2026-09-06/transcript.json) |
 
-## Safety and commercial boundary
+The [dated evidence pack](docs/evidence/2026-09-13/README.md) records source checksums and the distinction between local observations and CI. GitHub Actions repeats the checks in a clean Node 20 environment and attaches transcripts, coverage and audit results to the workflow run for its exact commit.
 
-The demonstrator enforces a request-only model:
+## What this establishes
 
-- `initiate_booking_request` records or routes an expression of interest;
-- the resulting state is `pending_host_confirmation`;
-- `requiresHostConfirmation` is `true`;
-- `paymentCollected` is `false`;
-- `automaticallyConfirmed` is `false`;
-- only the host can confirm availability and agree a transaction with the visitor;
-- no payment credentials are accepted or stored.
+This is evidence for a bounded, application-stage **TRL 4 laboratory integration**. The catalogue, people and requests are synthetic. The concierge uses deterministic retrieval; no generative model is exercised. MCP clients are explicitly connected.
 
-The API response is expected to preserve this invariant:
+It does not establish production readiness, generative-model quality, real host notifications, actual bookings, independent certification, regional adoption or organic discovery by consumer assistants. Controlled validation with authorised hosts and relevant regional data is the route to TRL 5/6.
+
+## Reproduce the checks
+
+Requires Node.js **20.19 or newer** and npm.
+
+```bash
+npm ci
+npm run verify
+npm run test:transports
+npm run evidence:record
+npm audit --audit-level=high
+```
+
+The transport check starts disposable processes on loopback and closes them after the scenario. It requires permission to bind a local TCP port. It contacts no external AI provider or real host.
+
+To save machine-readable observations:
+
+```bash
+npm run test:transports -- --output .tmp/transport-transcript.json
+npm run evidence:record -- --output .tmp/lab-transcript.json
+```
+
+For an interactive local HTTP server:
+
+```bash
+npm run build
+npm start
+```
+
+Then open http://127.0.0.1:3000. The [demo walkthrough](docs/demo-script.md) describes the interfaces and expected observations.
+
+## Request-only commercial model
+
+The independent host remains the seller. A request is an expression of interest; the host must confirm availability and agree any transaction outside this laboratory demonstrator.
 
 ```json
 {
@@ -53,120 +69,35 @@ The API response is expected to preserve this invariant:
 }
 ```
 
-## Target architecture
+The mock outbox exposes request status without visitor contact details. The service accepts only synthetic email domains for demonstration requests and rejects unsupported payment or confirmation fields.
+
+## Interfaces and architecture
 
 ```mermaid
 flowchart LR
-  Visitor[Visitor or evaluator] --> Web[Web / REST interface]
-  Agent[MCP client] --> MCP[MCP server]
-  Web --> App[Pirin Concierge service]
-  MCP --> App
-  App --> Catalogue[Synthetic experience catalogue]
-  App --> JSONLD[Schema.org JSON-LD]
-  App --> Concierge[Catalogue-grounded concierge]
-  App --> Request[Booking-request handler]
-  Request --> Outbox[Mock host outbox]
-  Outbox -. host confirms outside the demonstrator .-> Host[Independent host / seller]
+  Web[Web / REST client] --> App[Pirin Concierge]
+  HTTP[MCP HTTP client] --> App
+  Stdio[MCP stdio client] --> Tools[MCP tools]
+  App --> Tools
+  App --> Catalogue[Synthetic catalogue]
+  Tools --> Catalogue
+  App --> Outbox[Mock request outbox]
+  Tools --> Outbox
 ```
 
-This is the target reference architecture. Its implementation and deployed behaviour must be checked against the release-specific evidence before citing it as completed. See [`docs/architecture.md`](docs/architecture.md).
+- Catalogue/search: `GET /api/v1/experiences`, `GET /api/v1/experiences/search`, `GET /api/v1/experiences/{id}`.
+- Concierge: `POST /api/v1/concierge/search`.
+- Requests: `POST /api/v1/booking-requests`; inspection: `GET /api/v1/demo/outbox`.
+- Contract: `GET /openapi.yaml`; metadata: experience-page JSON-LD.
+- MCP HTTP: `/mcp`; built stdio entry point: `node dist/mcp-stdio.js`.
+- MCP tools: `search_experiences`, `get_experience`, `list_by_area`, `initiate_booking_request`.
 
-## Public interfaces
+See [architecture](docs/architecture.md), [OpenAPI](openapi/openapi.yaml), [data model](docs/data-model.md) and [threat model](docs/threat-model.md).
 
-The intended REST surface is:
+## Data and licensing
 
-- `GET /health`
-- `GET /api/v1/experiences`
-- `GET /api/v1/experiences/{id}`
-- `GET /api/v1/experiences/search`
-- `POST /api/v1/concierge/search`
-- `POST /api/v1/booking-requests`
-- `GET /api/v1/demo/outbox`
-- `GET /openapi.yaml`
-- `ALL /mcp` for the MCP HTTP transport
+Use synthetic data only. Do not add real host/customer contacts, booking records, survey responses, private application material or unlicensed media. The future regional pilot requires its own data arrangements; this repository does not prescribe its eventual cloud provider or transfer destinations. See [privacy](PRIVACY.md) and [security](SECURITY.md).
 
-The intended MCP tools are:
+Code, schemas, contracts and deployment examples use Apache-2.0. Original documentation and the synthetic dataset use CC BY 4.0. Third-party licences remain applicable. Pre-existing proprietary Calivina components are outside this reference layer; see [open-source scope](docs/open-source-scope.md).
 
-- `search_experiences`
-- `get_experience`
-- `list_by_area`
-- `initiate_booking_request`
-
-The checked-in OpenAPI document and MCP tool schemas are authoritative for the exact parameters of a given commit.
-
-## Quick start
-
-Prerequisites: Node.js 20 or newer and npm.
-
-```bash
-npm ci
-npm test
-npm run dev
-```
-
-In a separate terminal, start the local stdio MCP transport:
-
-```bash
-npm run mcp:stdio
-```
-
-Do not infer that these commands pass on a published release until a green CI run for the same commit is linked in [Verification status](#verification-status).
-
-## Evaluation path
-
-1. Validate the repository with `npm ci` and `npm test`.
-2. Inspect the synthetic catalogue and its JSON Schema validation.
-3. Open the generated API documentation from `openapi/openapi.yaml`.
-4. Connect an MCP Inspector or another standards-compliant client explicitly to this server.
-5. Call `search_experiences`, inspect one result, and list experiences by area.
-6. Initiate a synthetic booking request and verify the request-only response.
-7. Confirm that no payment or automatic-confirmation capability is exposed.
-
-The three-minute recording plan is in [`docs/demo-script.md`](docs/demo-script.md).
-
-## Evidence expected for TRL 4
-
-| Capability | Repository artefact | Release evidence required |
-|---|---|---|
-| Integrated catalogue | Demo records and schemas | Validation output for all records |
-| Machine-readable discovery | OpenAPI and JSON-LD | Contract tests and captured example |
-| Agent access | MCP server and four tools | Successful official client/Inspector trace |
-| Grounded concierge | Catalogue-backed retrieval | Test showing source-linked results |
-| Safe hand-off | Booking-request handler | Integration test reaching only a mock outbox |
-| Reproducibility | Lockfile and documented commands | Clean-clone run on the release commit |
-| Security baseline | Threat model and automated checks | Scan reports with no unresolved high/critical findings |
-
-The evidence record is a template until populated with exact dates, commit SHA, environment, commands, observed results, and durable URLs. See [`docs/trl4-evidence.md`](docs/trl4-evidence.md).
-
-## Data and privacy
-
-The checked-in dataset is synthetic. It must not be replaced with real names, contact details, booking records, survey responses, application materials, or photographs without documented rights and a separate privacy review. The public demo is intended for synthetic requests only. See [`PRIVACY.md`](PRIVACY.md) and [`docs/data-model.md`](docs/data-model.md).
-
-## Open-source boundary and licensing
-
-- Source code, API descriptions, schemas, tests, and deployment examples are licensed under Apache License 2.0.
-- Original documentation and the synthetic demo dataset are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
-- Third-party dependencies remain under their respective licences.
-- Pre-existing proprietary Calivina software, operational infrastructure, administration features, billing, production prompts, customer data, and trade secrets are not included or licensed here.
-
-See [`NOTICE.md`](NOTICE.md), [`LICENSE`](LICENSE), and [`docs/open-source-scope.md`](docs/open-source-scope.md).
-
-## Road from TRL 4 to TRL 6
-
-TRL 4 is the laboratory integration baseline. TRL 5 requires controlled validation with authorised hosts and representative regional data. TRL 6 requires an end-to-end micro-pilot in relevant operating conditions, measured against predeclared technical, usability, privacy, and adoption criteria. These later levels are **planned, not achieved** by publication of this repository.
-
-See [`docs/trl4-to-trl6-roadmap.md`](docs/trl4-to-trl6-roadmap.md).
-
-## Known limitations
-
-- Synthetic catalogue and synthetic booking requests only.
-- No claim of production readiness, operational resilience, or regional adoption.
-- No payments, confirmed bookings, inventory locking, identity verification, or production notifications.
-- No claim that general-purpose AI clients discover the service automatically; the demo client must be explicitly connected through MCP.
-- Deployment, performance, accessibility, and security observations remain release-specific evidence tasks.
-
-## Project notice
-
-This repository may be referenced in a SMART ERA application. It is **not EU-funded, certified, approved, or endorsed by SMART ERA, the European Union, or any SMART ERA consortium partner**. No EU emblem or funding acknowledgement should be inferred from this repository.
-
-Intended repository URL: `https://github.com/maxqmaxx/pirin-concierge` (the URL must be checked after repository creation).
+This repository may support a SMART ERA application. It does not claim a grant award, EU funding, SMART ERA endorsement or certification.

@@ -50,5 +50,27 @@ jobs:
       - name: Build distributable JavaScript
         run: npm run build
 
-      - name: Audit production dependencies
-        run: npm audit --audit-level=high
+      - name: Record in-process laboratory scenario
+        run: |
+          mkdir -p .tmp
+          node scripts/record-lab-demo.mjs > .tmp/lab-transcript.json
+
+      - name: Verify built HTTP and stdio transports
+        run: node scripts/verify-transports.mjs > .tmp/transport-transcript.json
+
+      - name: Audit locked dependencies
+        run: npm audit --audit-level=high --json > .tmp/dependency-audit.json
+
+      - name: Preserve machine-readable evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: laboratory-evidence-${{ github.sha }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            .tmp/lab-transcript.json
+            .tmp/transport-transcript.json
+            .tmp/dependency-audit.json
+            coverage/coverage-summary.json
